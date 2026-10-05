@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#f4f5f0" />
+    <meta name="description" content="나만의 집중 시간을 간단하게 기록하는 개인용 PWA" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="집중기록" />
+    <meta name="format-detection" content="telephone=no" />
+
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png" />
+    <link rel="stylesheet" href="./styles.css" />
+    <title>집중기록</title>
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">나만의 집중 리듬</p>
+          <h1>집중기록</h1>
+        </div>
+        <span id="statusBadge" class="status-badge" aria-live="polite">준비</span>
+      </header>
+
+      <section class="timer-card" aria-labelledby="timerTitle">
+        <p id="timerTitle" class="timer-label">현재 집중 시간</p>
+        <p id="timer" class="timer" role="timer" aria-live="off">00:00:00</p>
+
+        <label class="memo-field" for="memoInput">
+          <span>무엇에 집중하나요?</span>
+          <input
+            id="memoInput"
+            type="text"
+            maxlength="80"
+            autocomplete="off"
+            enterkeyhint="done"
+            placeholder="예: 사업계획서 작성"
+          />
+        </label>
+
+        <div id="idleActions" class="primary-actions">
+          <button id="startButton" class="button button-start" type="button">
+            <span class="button-icon" aria-hidden="true">▶</span>
+            집중 시작
+          </button>
+        </div>
+
+        <div id="runningActions" class="primary-actions running-actions" hidden>
+          <button id="breakButton" class="button button-break" type="button">
+            <span class="button-icon" aria-hidden="true">↯</span>
+            집중 깨짐
+          </button>
+          <button id="endButton" class="button button-end" type="button">
+            <span class="button-icon" aria-hidden="true">■</span>
+            종료
+          </button>
+        </div>
+
+        <p id="helperText" class="helper-text">메모는 선택 사항이에요. 바로 시작해도 됩니다.</p>
+      </section>
+
+      <section class="overview" aria-labelledby="overviewTitle">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">하루 한눈에 보기</p>
+            <h2 id="overviewTitle">오늘 기록</h2>
+          </div>
+          <button id="todayButton" class="text-button" type="button" hidden>오늘로</button>
+        </div>
+
+        <nav class="date-nav" aria-label="기록 날짜 이동">
+          <button id="previousDay" class="icon-button" type="button" aria-label="이전 날짜">‹</button>
+          <label class="date-picker-wrap">
+            <span id="selectedDateLabel">오늘</span>
+            <input id="datePicker" type="date" aria-label="날짜 선택" />
+          </label>
+          <button id="nextDay" class="icon-button" type="button" aria-label="다음 날짜">›</button>
+        </nav>
+
+        <div class="stats-grid">
+          <article class="stat-card stat-card-wide">
+            <span>총 집중시간</span>
+            <strong id="totalTime">0분</strong>
+          </article>
+          <article class="stat-card">
+            <span>평균 지속시간</span>
+            <strong id="averageTime">0분</strong>
+          </article>
+          <article class="stat-card">
+            <span>최장 집중시간</span>
+            <strong id="longestTime">0분</strong>
+          </article>
+          <article class="stat-card stat-card-wide stat-card-accent">
+            <span>집중이 깨진 횟수</span>
+            <strong id="breakCount">0회</strong>
+          </article>
+        </div>
+      </section>
+
+      <section class="history" aria-labelledby="historyTitle">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">집중 구간</p>
+            <h2 id="historyTitle">세션 기록</h2>
+          </div>
+          <span id="sessionCount" class="session-count">0개</span>
+        </div>
+        <ol id="sessionList" class="session-list"></ol>
+        <div id="emptyState" class="empty-state">
+          <span aria-hidden="true">◷</span>
+          <p>아직 기록이 없어요.</p>
+          <small>집중을 시작하면 이곳에 차곡차곡 쌓입니다.</small>
+        </div>
+      </section>
+
+      <footer>
+        <p>기록은 이 기기의 브라우저에만 안전하게 저장됩니다.</p>
+      </footer>
+    </main>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script src="./app.js" defer></script>
+  </body>
+</html>
